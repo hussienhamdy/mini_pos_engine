@@ -4,7 +4,7 @@ A Dart-based point-of-sale engine.
 
 ## Versions
 
-* Flutter 3.22.0
+* Flutter 3.32.0
 * Dart 3.8.0
 
 ## Getting Started
