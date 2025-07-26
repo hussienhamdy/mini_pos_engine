@@ -48,3 +48,20 @@ class ChangeDiscount extends CartEvent {
 class ClearCart extends CartEvent {}
 
 class Checkout extends CartEvent {}
+
+class UndoLastNActions extends CartEvent {
+  final int actionsCount;
+
+  const UndoLastNActions(this.actionsCount);
+
+  @override
+  List<Object> get props => [actionsCount];
+}
+
+class RedoLastNActions extends CartEvent {
+  final int actionsCount;
+
+  const RedoLastNActions(this.actionsCount);
+  @override
+  List<Object> get props => [actionsCount];
+}
