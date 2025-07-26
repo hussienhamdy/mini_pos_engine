@@ -12,4 +12,16 @@ class Item extends Equatable {
 
   @override
   String toString() => 'Item(id: $id, name: $name, price: $price)';
+
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      price: json['price'] as double,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name, 'price': price};
+  }
 }

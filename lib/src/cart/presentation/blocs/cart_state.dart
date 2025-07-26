@@ -16,4 +16,14 @@ class CartLoaded extends CartState {
 
   @override
   List<Object> get props => [cartData];
+
+  factory CartLoaded.fromJson(Map<String, dynamic> json) {
+    return CartLoaded(
+      cartData: CartData.fromJson(json['cartData'] as Map<String, dynamic>),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'cartData': cartData.toJson()};
+  }
 }

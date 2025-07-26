@@ -20,4 +20,20 @@ class CartData extends Equatable {
       totals: totals ?? this.totals,
     );
   }
+
+  factory CartData.fromJson(Map<String, dynamic> json) {
+    return CartData(
+      cartLines: (json['cartLines'] as List<dynamic>)
+          .map((e) => CartLine.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      totals: Totals.fromJson(json['totals'] as Map<String, dynamic>),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'cartLines': cartLines.map((e) => e.toJson()).toList(),
+      'totals': totals.toJson(),
+    };
+  }
 }

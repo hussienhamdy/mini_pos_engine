@@ -17,4 +17,20 @@ class Totals extends Equatable {
   @override
   String toString() =>
       'Totals(subtotal: $subtotal, grandTotal: $grandTotal, vat: $vat)';
+
+  factory Totals.fromJson(Map<String, dynamic> json) {
+    return Totals(
+      subtotal: json['subtotal'] as double,
+      grandTotal: json['grandTotal'] as double,
+      vat: json['vat'] as double,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'subtotal': subtotal,
+      'grandTotal': grandTotal,
+      'vat': vat,
+    };
+  }
 }

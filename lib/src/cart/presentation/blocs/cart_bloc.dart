@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mini_pos_engine/src/cart/domain/entities/cart_data.dart';
 import 'package:mini_pos_engine/src/cart/domain/entities/cart_line.dart';
 import 'package:mini_pos_engine/src/cart/domain/entities/totals.dart';
@@ -13,7 +13,7 @@ import 'package:mini_pos_engine/src/catalog/domain/entities/item.dart';
 part 'cart_event.dart';
 part 'cart_state.dart';
 
-class CartBloc extends Bloc<CartEvent, CartState> {
+class CartBloc extends HydratedBloc<CartEvent, CartState> {
   final AddItemUseCase addItemUseCase;
   final RemoveItemUseCase removeItemUseCase;
   final ChangeDiscountUseCase changeDiscountUseCase;
@@ -88,11 +88,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _onClearCart(ClearCart event, Emitter<CartState> emit) {
-    emit(
-      CartLoaded(
-        cartData: CartData(cartLines: [], totals: Totals.empty()),
-      ),
-    );
+    emit(CartInitial());
   }
 
   void _onCheckout(Checkout event, Emitter<CartState> emit) {
@@ -104,6 +100,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           cartData: CartData(cartLines: [], totals: Totals.empty()),
         ),
       );
+    }
+  }
+
+  @override
+  CartState? fromJson(Map<String, dynamic> json) {
+    try {
+      return CartLoaded.fromJson(json);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(CartState state) {
+    if (state is CartLoaded) {
+      return state.toJson();
+    } else {
+      return null;
     }
   }
 }
