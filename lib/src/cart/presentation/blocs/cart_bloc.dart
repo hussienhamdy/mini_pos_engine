@@ -8,7 +8,6 @@ import 'package:mini_pos_engine/src/cart/domain/entities/totals.dart';
 import 'package:mini_pos_engine/src/cart/domain/usecases/add_item_usecase.dart';
 import 'package:mini_pos_engine/src/cart/domain/usecases/change_discount_usecase.dart';
 import 'package:mini_pos_engine/src/cart/domain/usecases/change_quantity_usecase.dart';
-import 'package:mini_pos_engine/src/cart/domain/usecases/checkout_usecase.dart';
 import 'package:mini_pos_engine/src/cart/domain/usecases/remove_item_usecase.dart';
 import 'package:mini_pos_engine/src/catalog/domain/entities/item.dart';
 
@@ -20,7 +19,6 @@ class CartBloc extends HydratedBloc<CartEvent, CartState> {
   final RemoveItemUseCase removeItemUseCase;
   final ChangeDiscountUseCase changeDiscountUseCase;
   final ChangeQuantityUseCase changeQuantityUseCase;
-  final CheckoutUseCase checkoutUseCase;
   late List<CartState> _undoStack;
   late List<CartState> _redoStack;
 
@@ -29,14 +27,12 @@ class CartBloc extends HydratedBloc<CartEvent, CartState> {
     this.removeItemUseCase,
     this.changeDiscountUseCase,
     this.changeQuantityUseCase,
-    this.checkoutUseCase,
   ) : super(CartInitial()) {
     on<AddItem>(_onAddItem);
     on<RemoveItem>(_onRemoveItem);
     on<ChangeQty>(_onChangeQty);
     on<ChangeDiscount>(_onChangeDiscount);
     on<ClearCart>(_onClearCart);
-    on<Checkout>(_onCheckout);
     on<UndoLastNActions>(_undoNLastActions);
     on<RedoLastNActions>(_redoNLastActions);
     _undoStack = [];
@@ -109,18 +105,6 @@ class CartBloc extends HydratedBloc<CartEvent, CartState> {
   void _onClearCart(ClearCart event, Emitter<CartState> emit) {
     _undoStack.add(state);
     emit(CartInitial());
-  }
-
-  void _onCheckout(Checkout event, Emitter<CartState> emit) {
-    if (state is CartLoaded) {
-      final state = this.state as CartLoaded;
-      checkoutUseCase.call(state.cartData);
-      emit(
-        CartLoaded(
-          cartData: CartData(cartLines: [], totals: Totals.empty()),
-        ),
-      );
-    }
   }
 
   void _undoNLastActions(UndoLastNActions event, Emitter<CartState> emit) {

@@ -47,8 +47,6 @@ class ChangeDiscount extends CartEvent {
 
 class ClearCart extends CartEvent {}
 
-class Checkout extends CartEvent {}
-
 class UndoLastNActions extends CartEvent {
   final int actionsCount;
 

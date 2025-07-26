@@ -7,7 +7,6 @@ import 'package:mini_pos_engine/src/cart/domain/entities/totals.dart';
 import 'package:mini_pos_engine/src/cart/domain/usecases/add_item_usecase.dart';
 import 'package:mini_pos_engine/src/cart/domain/usecases/change_discount_usecase.dart';
 import 'package:mini_pos_engine/src/cart/domain/usecases/change_quantity_usecase.dart';
-import 'package:mini_pos_engine/src/cart/domain/usecases/checkout_usecase.dart';
 import 'package:mini_pos_engine/src/cart/domain/usecases/remove_item_usecase.dart';
 import 'package:mini_pos_engine/src/cart/presentation/blocs/cart_bloc.dart';
 import 'package:mini_pos_engine/src/catalog/domain/entities/item.dart';
@@ -21,8 +20,6 @@ class MockRemoveItemUseCase extends Mock implements RemoveItemUseCase {}
 class MockChangeQuantityUseCase extends Mock implements ChangeQuantityUseCase {}
 
 class MockChangeDiscountUseCase extends Mock implements ChangeDiscountUseCase {}
-
-class MockCheckoutUseCase extends Mock implements CheckoutUseCase {}
 
 class MockStorage extends Mock implements Storage {
   @override
@@ -44,7 +41,6 @@ void main() {
   late MockRemoveItemUseCase mockRemoveItemUseCase;
   late MockChangeQuantityUseCase mockChangeQuantityUseCase;
   late MockChangeDiscountUseCase mockChangeDiscountUseCase;
-  late MockCheckoutUseCase mockCheckoutUseCase;
   late Storage storage;
 
   setUp(() {
@@ -54,13 +50,11 @@ void main() {
     mockRemoveItemUseCase = MockRemoveItemUseCase();
     mockChangeQuantityUseCase = MockChangeQuantityUseCase();
     mockChangeDiscountUseCase = MockChangeDiscountUseCase();
-    mockCheckoutUseCase = MockCheckoutUseCase();
     cartBloc = CartBloc(
       mockAddItemUseCase,
       mockRemoveItemUseCase,
       mockChangeDiscountUseCase,
       mockChangeQuantityUseCase,
-      mockCheckoutUseCase,
     );
   });
 
